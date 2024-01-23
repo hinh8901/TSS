@@ -18,10 +18,15 @@ const config: Config = {
         pacifico: ['var(--font-pacifico)'],
       },
       colors: {
-
+        white: "#ffffff"
       },
       zIndex: {
         "-1": "-1",
+      },
+      keyframes: {
+        ripple: {
+          "0%, 100%": { transform: "scale(2)" },
+        }
       }
     },
   },

@@ -1,7 +1,6 @@
 import React from "react"
 import Link, { LinkProps } from "next/link"
 import NextImage, { ImageProps as NextImageProps } from "next/image"
-import clsx from "clsx"
 
 interface ImageProps {
   src: NextImageProps["src"]
@@ -10,10 +9,10 @@ interface ImageProps {
   height: NextImageProps["height"]
   priority?: NextImageProps["priority"]
   href?: LinkProps["href"]
-  isBackground?: boolean
+  className?: NextImageProps["className"]
   slots?: {
     link?: Omit<LinkProps, "href">
-    image?: Omit<NextImageProps, "src" | "alt" | "width" | "height" | "priority">
+    image?: Omit<NextImageProps, "src" | "alt" | "width" | "height" | "priority" | "className">
   }
 }
 
@@ -25,7 +24,7 @@ const Image: React.FC<ImageProps> = (props) => {
     height,
     priority,
     href,
-    isBackground,
+    className,
     slots
   } = props
 
@@ -36,9 +35,7 @@ const Image: React.FC<ImageProps> = (props) => {
       width={width}
       height={height}
       priority={priority}
-      className={clsx(
-        isBackground ? "absolute bottom-0 left-0 w-full -z-1" : ""
-      )}
+      className={className}
       {...slots?.image}
     />
   )
