@@ -3,6 +3,7 @@ import React from "react"
 import Image from "@/components/Image"
 import Background from "@/components/Background"
 import Button from "@/components/Button"
+import { Colors } from "@/themes"
 
 const Login: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const Login: React.FC = () => {
       </div>
       <div className="h-full w-full absolute left-0 top-0">
         <h1 className="capitalize text-4xl text-white font-semibold absolute top-[6%] left-[10%]">manage work effectively</h1>
-        <Button>Click</Button>
+        <Button className="!absolute bottom-[6%] right-[6%] text-white text-xl capitalize" animateColor={Colors.white}>get started</Button>
       </div>
     </section>
   )

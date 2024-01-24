@@ -2,13 +2,19 @@
 
 import React from "react"
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> { }
+import { RippleAnimation } from "../Animations"
+import { Colors } from "@/themes"
+
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  animateColor?: string
+}
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { children } = props
+  const { children, className, animateColor = Colors.blue, ...restProps } = props
 
   return (
-    <button className="w-[200px] h-[200px] overflow-hidden border border-sky-500" onClick={(e) => console.log(e)}>
+    <button className={`relative overflow-hidden border rounded py-2 px-8 ${className}`} {...restProps}>
+      <RippleAnimation color={animateColor} />
       {children}
     </button>
   )

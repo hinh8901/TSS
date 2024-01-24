@@ -1,4 +1,5 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
+import { Colors as colors } from "./src/themes"
 
 const config: Config = {
   content: [
@@ -14,22 +15,24 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        openSans: ['var(--font-open-sans)'],
-        pacifico: ['var(--font-pacifico)'],
+        openSans: ["var(--font-open-sans)"],
+        pacifico: ["var(--font-pacifico)"],
       },
-      colors: {
-        white: "#ffffff"
-      },
+      colors,
       zIndex: {
         "-1": "-1",
       },
       keyframes: {
         ripple: {
-          "0%, 100%": { transform: "scale(2)" },
-        }
-      }
+          "0%": { transform: "scale(0)", opacity: ".6" },
+          "100%": { transform: "scale(2)", opacity: "0" },
+        },
+      },
+      animation: {
+        ripple: "ripple 1s ease-in-out",
+      },
     },
   },
   plugins: [],
-};
-export default config;
+}
+export default config
