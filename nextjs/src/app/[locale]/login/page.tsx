@@ -1,13 +1,18 @@
 import React from "react"
+import { useTranslations } from "next-intl"
 
 import Image from "@/components/Image"
 import Background from "@/components/Background"
 import Button from "@/components/Button"
 import { Colors } from "@/themes"
+import Dialog from "@/components/Dialog"
 
 const Login: React.FC = () => {
+  const t = useTranslations('login')
+
   return (
     <section className="w-full h-screen relative">
+      <Dialog />
       <div className="w-full sm:w-1/2 max-w-[400px] h-full flex justify-center items-center relative">
         <Background>
           <Image src="/images/banners/wave1.svg" className="w-full absolute bottom-0 left-0" alt="wave" priority width={563} height={380} />
@@ -19,8 +24,18 @@ const Login: React.FC = () => {
         <Image src="/images/banners/welcome.svg" alt="Welcome" width={385} height={422} priority />
       </div>
       <div className="h-full w-full absolute left-0 top-0">
-        <h1 className="capitalize text-4xl text-white font-semibold absolute top-[6%] left-[10%]">manage work effectively</h1>
-        <Button className="!absolute bottom-[6%] right-[6%] text-white text-xl capitalize" animateColor={Colors.white}>get started</Button>
+        <h1 className="capitalize text-4xl text-white font-semibold absolute top-[6%] left-[10%]">{t("slogan")}</h1>
+        <p className="absolute text-white capitalize bottom-[3%] left-[6%]">
+          {t("newHere")}
+          <span className="ml-1.5 font-semibold cursor-pointer hover:underline">{t("register")}</span>
+        </p>
+        <Button
+          className="!absolute bottom-[3%] right-[6%] text-white text-xl capitalize bg-transparent border-white hover:border-white"
+          rippleAnimation={{ color: Colors.white }}
+          type="primary"
+        >
+          {t("login")}
+        </Button>
       </div>
     </section>
   )

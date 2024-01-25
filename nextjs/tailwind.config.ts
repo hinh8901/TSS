@@ -27,9 +27,29 @@ const config: Config = {
           "0%": { transform: "scale(0)", opacity: ".6" },
           "100%": { transform: "scale(2)", opacity: "0" },
         },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "scale(0)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0", transform: "scale(0)" },
+        },
+        opacityIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        opacityOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
       },
       animation: {
         ripple: "ripple 1s ease-in-out",
+        fadeIn: "fadeIn .25s ease-out",
+        fadeOut: "fadeOut .25s ease-out",
+        opacityIn: "opacityIn .25s ease-out",
+        opacityOut: "opacityOut .25s ease-out",
       },
     },
   },

@@ -1,23 +1,16 @@
 import { NextRequest, NextResponse } from "next/server"
+import createIntlMiddleware from "next-intl/middleware"
 
-const locales = ["en", "vi"]
-
-const getLocale = (request: NextRequest) => {
-  const { pathname } = request.nextUrl
-  const locale = locales.find((locale) => pathname.startsWith(`/${locale}`) || pathname === `/${locale}`)
-  return locale || "en"
-}
+import { locales, defaultLocale } from "./i18n"
 
 export const middleware = (request: NextRequest) => {
-  const { pathname } = request.nextUrl
-  const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}`) || pathname === `/${locale}`)
+  const handleI18nRouting = createIntlMiddleware({
+    locales,
+    defaultLocale,
+  })
 
-  if (pathnameHasLocale) return NextResponse.next()
-
-  const locale = getLocale(request)
-  request.nextUrl.pathname = `/${locale}${pathname}`
-  console.log("request", request)
-  return Response.redirect(request.nextUrl)
+  const response = handleI18nRouting(request)
+  return response
 }
 
 export const config = {
