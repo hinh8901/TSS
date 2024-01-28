@@ -13,7 +13,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   }
 }
 
-type ButtonTypes = "primary" | "success" | "danger"
+type ButtonTypes = "primary" | "success" | "danger" | "secondary"
 
 const Button: React.FC<ButtonProps> = (props) => {
   const {
@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     className,
     type = "primary",
     rippleAnimation = {
-      color: Colors.blue
+      color: Colors.white
     },
     ...restProps
   } = props
@@ -34,6 +34,9 @@ const Button: React.FC<ButtonProps> = (props) => {
       case "success":
         return "text-white bg-green4 border-green4 hover:bg-green5 hover:border-green5"
 
+      case "secondary":
+        return "text-white bg-gray8 border-gray8 hover:bg-gray10 hover:border-gray10"
+
       case "primary":
       default:
         return "text-white bg-blue4 border-blue4 hover:bg-blue5 hover:border-blue5"
@@ -41,7 +44,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   }
 
   return (
-    <button className={`relative overflow-hidden border rounded py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
+    <button className={`relative overflow-hidden border rounded py-2.5 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
       <CanView condition={!!rippleAnimation}><RippleAnimation color={(rippleAnimation as { color: string }).color} /></CanView>
       {children}
     </button>
