@@ -2,6 +2,7 @@
   "login": {
     "slogan": "manage work effectively",
     "login": "login",
+    "loginTitle": "Welcome back you've been missed!",
     "newHere": "new here?",
     "register": "register"
   }

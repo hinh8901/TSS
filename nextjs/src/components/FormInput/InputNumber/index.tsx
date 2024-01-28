@@ -1,10 +1,11 @@
 import clsx from "clsx"
 import React from "react"
 
-export interface InputTextProps extends React.HTMLAttributes<HTMLInputElement> {
+export interface InputNumberProps extends React.HTMLAttributes<HTMLInputElement> {
+  numberType: "integer" | "decimal"
 }
 
-const InputText: React.FC<InputTextProps> = (props) => {
+const InputNumber: React.FC<InputNumberProps> = (props) => {
   const { } = props
 
   return (
@@ -18,4 +19,4 @@ const InputText: React.FC<InputTextProps> = (props) => {
   )
 }
 
-export default InputText
+export default InputNumber

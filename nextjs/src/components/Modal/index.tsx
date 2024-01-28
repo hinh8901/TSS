@@ -63,7 +63,7 @@ const Modal: React.FC<ModalProps> = (props) => {
           className={clsx(
             "myModal",
             open ? "animate-fadeIn" : "animate-fadeOut",
-            "py-5 px-6 bg-white rounded-md"
+            "py-5 px-6 bg-white rounded-xl w-[90%]"
           )}
         >
           <CanView condition={!!children} fallback={<div className="bg-white h-[280px] w-[280px] rounded-md" />}>
