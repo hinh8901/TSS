@@ -4,6 +4,7 @@
     "login": "login",
     "loginTitle": "Welcome back you've been missed!",
     "newHere": "new here?",
-    "register": "register"
+    "register": "register",
+    "forgotPassword": "forgot password?"
   }
 }
