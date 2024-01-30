@@ -10,6 +10,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   type?: ButtonTypes
   rippleAnimation?: false | {
     color?: string
+    duration?: number
   }
 }
 
@@ -20,11 +21,10 @@ const Button: React.FC<ButtonProps> = (props) => {
     children,
     className,
     type = "primary",
-    rippleAnimation = {
-      color: Colors.white
-    },
+    rippleAnimation = {},
     ...restProps
   } = props
+
 
   const getTypeClass = (type: ButtonTypes) => {
     switch (type) {
@@ -45,7 +45,12 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   return (
     <button className={`relative overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
-      <CanView condition={!!rippleAnimation}><RippleAnimation color={(rippleAnimation as { color: string }).color} /></CanView>
+      <CanView condition={!!rippleAnimation}>
+        <RippleAnimation
+          color={(rippleAnimation as { color: string }).color ?? Colors.white}
+          duration={(rippleAnimation as { duration: number }).duration ?? 500}
+        />
+      </CanView>
       {children}
     </button>
   )
