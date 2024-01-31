@@ -4,6 +4,12 @@
     "login": "login",
     "loginTitle": "Welcome back you've been missed!",
     "newHere": "new here?",
-    "register": "register"
+    "register": "register",
+    "client": {
+      "login": "login",
+      "loginTitle": "Welcome back you've been missed!",
+      "forgotPassword": "forgot password?",
+      "orLogin": "or Login with"
+    }
   }
 }

@@ -8,7 +8,7 @@ import FormLogin from "./partials/FormLogin"
 const Login: React.FC = () => {
   const t = useTranslations('login')
   const messages = useMessages()
-
+  
   return (
     <NextIntlClientProvider messages={messages}>
       <section className="w-full h-screen relative">

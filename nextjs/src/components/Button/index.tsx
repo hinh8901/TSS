@@ -3,13 +3,13 @@
 import React from "react"
 
 import { RippleAnimation } from "../Animations"
-import { Colors } from "@/themes"
 import CanView from "../CanView"
 
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   type?: ButtonTypes
   rippleAnimation?: false | {
     color?: string
+    duration?: number
   }
 }
 
@@ -20,11 +20,10 @@ const Button: React.FC<ButtonProps> = (props) => {
     children,
     className,
     type = "primary",
-    rippleAnimation = {
-      color: Colors.white
-    },
+    rippleAnimation = {},
     ...restProps
   } = props
+
 
   const getTypeClass = (type: ButtonTypes) => {
     switch (type) {
@@ -44,8 +43,13 @@ const Button: React.FC<ButtonProps> = (props) => {
   }
 
   return (
-    <button className={`relative overflow-hidden border rounded py-2.5 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
-      <CanView condition={!!rippleAnimation}><RippleAnimation color={(rippleAnimation as { color: string }).color} /></CanView>
+    <button className={`relative overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
+      <CanView condition={!!rippleAnimation}>
+        <RippleAnimation
+          color={(rippleAnimation as { color: string }).color}
+          duration={(rippleAnimation as { duration: number }).duration}
+        />
+      </CanView>
       {children}
     </button>
   )
