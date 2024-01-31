@@ -19,9 +19,6 @@ const config: Config = {
         pacifico: ["var(--font-pacifico)"],
       },
       colors,
-      zIndex: {
-        "-1": "-1",
-      },
       keyframes: {
         ripple: {
           "0%": { transform: "scale(0)", opacity: ".6" },

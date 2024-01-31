@@ -47,8 +47,8 @@ const Button: React.FC<ButtonProps> = (props) => {
     <button className={`relative overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
       <CanView condition={!!rippleAnimation}>
         <RippleAnimation
-          color={(rippleAnimation as { color: string }).color ?? Colors.white}
-          duration={(rippleAnimation as { duration: number }).duration ?? 500}
+          color={(rippleAnimation as { color: string }).color}
+          duration={(rippleAnimation as { duration: number }).duration}
         />
       </CanView>
       {children}

@@ -1,6 +1,7 @@
 "use client"
 
 import useDebouncedArrayCleanUp from "@/hooks/useDebouncedArrayCleanUp"
+import { Colors } from "@/themes"
 import React, { MouseEvent, useState } from "react"
 
 interface RippleProps {
@@ -16,7 +17,7 @@ type RippleState = {
 }
 
 const Ripple: React.FC<RippleProps> = (props) => {
-  const { color, duration = 500, className = "" } = props
+  const { color = Colors.white, duration = 500, className = "" } = props
   const [ripples, setRipples] = useState<RippleState[]>([])
 
   useDebouncedArrayCleanUp(ripples, setRipples, duration)

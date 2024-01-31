@@ -1,6 +1,9 @@
 import React from "react"
-import Link, { LinkProps } from "next/link"
+import { LinkProps } from "next/link"
 import NextImage, { ImageProps as NextImageProps } from "next/image"
+import { useLocale } from "next-intl"
+
+import { Link } from "@/navigation"
 
 interface ImageProps {
   src: NextImageProps["src"]
@@ -11,7 +14,7 @@ interface ImageProps {
   href?: LinkProps["href"]
   className?: NextImageProps["className"]
   slots?: {
-    link?: Omit<LinkProps, "href">
+    link?: Omit<LinkProps, "href" | "locale"> & { locale?: string }
     image?: Omit<NextImageProps, "src" | "alt" | "width" | "height" | "priority" | "className">
   }
 }
@@ -28,6 +31,8 @@ const Image: React.FC<ImageProps> = (props) => {
     slots
   } = props
 
+  const locale = useLocale()
+
   const customImage = (
     <NextImage
       src={src}
@@ -41,7 +46,7 @@ const Image: React.FC<ImageProps> = (props) => {
   )
 
   if (href) return (
-    <Link href={href} {...slots?.link}>
+    <Link href={href} locale={locale} {...slots?.link}>
       {customImage}
     </Link>
   )

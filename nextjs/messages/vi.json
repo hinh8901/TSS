@@ -2,8 +2,13 @@
   "login": {
     "slogan": "quản lý công việc hiệu quả",
     "login": "đăng nhập",
-    "loginTitle": "đăng nhập",
     "newHere": "chưa có tài khoản?",
-    "register": "đăng ký"
+    "register": "đăng ký",
+    "client": {
+      "login": "đăng nhập",
+      "loginTitle": "Welcome back you've been missed!",
+      "forgotPassword": "quên mật khẩu?",
+      "orLogin": "hoặc đăng nhập với"
+    }
   }
 }

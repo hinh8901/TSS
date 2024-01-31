@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react"
 import clsx from "clsx"
+import { CgClose } from "react-icons/cg"
 
 import CanView from "../CanView"
 
@@ -9,17 +10,23 @@ interface ModalProps {
   children?: React.ReactNode
   open?: boolean
   duration?: number
+  onClose?: () => void
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
   const {
     children,
     open: openModal = false,
-    duration = 250
+    duration = 250,
+    onClose
   } = props
 
   const [open, setOpen] = useState(openModal)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const handleClose = () => {
+    onClose?.()
+  }
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
@@ -63,9 +70,15 @@ const Modal: React.FC<ModalProps> = (props) => {
           className={clsx(
             "myModal",
             open ? "animate-fadeIn" : "animate-fadeOut",
-            "py-5 px-6 bg-white rounded-xl w-[90%]"
+            "py-5 px-6 bg-white rounded-xl w-[90%] overflow-hidden"
           )}
         >
+          <div
+            className="absolute bg-red right-0 top-0 w-16 h-16 clip-path-triangle cursor-pointer hover:bg-red3 duration-300"
+            onClick={handleClose}
+          >
+            <CgClose className="absolute text-lg text-white left-3/4 -translate-x-1/2 top-1/2 -translate-y-full" />
+          </div>
           <CanView condition={!!children} fallback={<div className="bg-white h-[280px] w-[280px] rounded-md" />}>
             {children}
           </CanView>
