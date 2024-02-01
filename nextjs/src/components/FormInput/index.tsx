@@ -1,19 +1,22 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { BaseSyntheticEvent, useState } from "react"
+import { Control, useController, useFormContext } from "react-hook-form"
+
 import InputText, { InputTextProps } from "./InputText"
+import useCustomFormStatus from "@/hooks/useCustomFormStatus"
 
 type InputTypes = "text" | "number"
 
 interface BaseProps {
-  label?: string
   name: string
+  control?: Control
+  label?: string
   defaultValue?: any
   required?: boolean
   disabled?: boolean
   errorMessage?: string
   clearErrorOnFocus?: boolean
-  helperText?: string
 }
 
 
@@ -28,6 +31,7 @@ const InputComponents = {
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps<InputTypes>>(function FormInput(props, ref) {
   const {
     type = "text",
+    control,
     name,
     defaultValue,
     disabled = false,
@@ -38,14 +42,40 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps<InputTypes>>
   } = props
 
   const [hideErrorStatus, setHideErrorStatus] = useState(false)
-  // const { active } = useActiveFormContext()
+  const { active } = useCustomFormStatus()
+  const hookFormMethods = useFormContext()
+
+  const hookFormControl = control || hookFormMethods?.control
+  if (!hookFormControl) throw new Error("control(react-hook-form) is required")
+
+  const {
+    field: { onChange, onBlur, ref: hookFormRef, value = "", ...restHookFormFields },
+    fieldState: { invalid: hookFormInvalid }
+  } = useController({ name, control: hookFormControl, defaultValue })
+
+  const onChangeFormInput = (value: any) => {
+    onChange(value)
+  }
+
+  const onBlurFormInput = (event: BaseSyntheticEvent) => {
+    clearErrorOnFocus && setHideErrorStatus(false)
+    onBlur()
+  }
+
+  const onFocusFormInput = () => {
+    clearErrorOnFocus && setHideErrorStatus(true)
+  }
 
   const inputProps: any = {
-    ref,
-    error: hideErrorStatus ? false : !!errorMessage,
-    // disabled: !active || disabled,
-    disabled: disabled,
+    value,
+    ref: ref || hookFormRef,
+    error: hideErrorStatus ? false : !!errorMessage || hookFormInvalid,
+    disabled: !active || disabled,
+    onChangeFormInput,
+    onBlurFormInput,
+    onFocusFormInput,
     helperText: hideErrorStatus ? helperText || null : errorMessage || helperText || null,
+    ...restHookFormFields,
     ...restProps
   }
 

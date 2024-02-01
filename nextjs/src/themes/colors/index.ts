@@ -19,6 +19,7 @@ const Colors = {
   red2: "#E6D0D0",
   red3: "#dc3545",
   red4: "#c82333",
+  red5: "#fff7f7",
   blue: "#2F80ED",
   blue2: "#CADAE4",
   blue3: "#0069d9",

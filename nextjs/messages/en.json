@@ -9,7 +9,29 @@
       "login": "login",
       "loginTitle": "Welcome back you've been missed!",
       "forgotPassword": "forgot password?",
-      "orLogin": "or Login with"
+      "orLogin": "or Login with",
+      "loginGG": "Login with Google",
+      "loginMS": "Login with Microsoft",
+      "loginTW": "Login with Twitter",
+      "loginGit": "Login with Github",
+      "loginPhone": "Login with Phone Number"
+    }
+  },
+  "errorMessages": {
+    "client": {
+      "fieldRequired": "{field} is required",
+      "fieldInvalid": "{field} is invalid",
+      "fieldMin": "{field} must be at least {min} characters",
+      "fieldMustSpecialChar": "{field} must contain at least {minSpecialChar, plural, =1{one special character} other {# special characters}}",
+      "fieldMustLowerCase": "{field} must contain at least {minLower, plural, =1{one lower character} other {# lower characters}}",
+      "fieldMustUpperCase": "{field} must contain at least {minUpper, plural, =1{one upper character} other {# upper characters}}",
+      "fieldMustNumber": "{field} must contain at least {minNumber, plural, =1{one number character} other {# number characters}}"
+    }
+  },
+  "fields": {
+    "client": {
+      "email": "Email",
+      "pass": "Password"
     }
   }
 }

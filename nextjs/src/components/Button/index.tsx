@@ -1,11 +1,11 @@
 "use client"
 
-import React from "react"
+import React, { HTMLProps } from "react"
 
 import { RippleAnimation } from "../Animations"
 import CanView from "../CanView"
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends HTMLProps<HTMLButtonElement> {
   type?: ButtonTypes
   rippleAnimation?: false | {
     color?: string
