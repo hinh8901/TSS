@@ -1,7 +1,7 @@
+import React, { HTMLProps } from "react"
 import clsx from "clsx"
-import React from "react"
 
-interface BackgroundProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
+interface BackgroundProps extends Omit<HTMLProps<HTMLDivElement>, "children" | "className"> {
   children: React.HTMLAttributes<HTMLDivElement>["children"]
   className?: React.HTMLAttributes<HTMLDivElement>["className"]
 }

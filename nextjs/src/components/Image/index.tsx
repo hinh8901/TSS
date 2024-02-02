@@ -13,9 +13,10 @@ interface ImageProps {
   priority?: NextImageProps["priority"]
   href?: LinkProps["href"]
   className?: NextImageProps["className"]
+  onClick?: NextImageProps["onClick"]
   slots?: {
     link?: Omit<LinkProps, "href" | "locale"> & { locale?: string }
-    image?: Omit<NextImageProps, "src" | "alt" | "width" | "height" | "priority" | "className">
+    image?: Omit<NextImageProps, "src" | "alt" | "width" | "height" | "priority" | "className" | "onClick">
   }
 }
 
@@ -28,6 +29,7 @@ const Image: React.FC<ImageProps> = (props) => {
     priority,
     href,
     className,
+    onClick,
     slots
   } = props
 
@@ -41,6 +43,7 @@ const Image: React.FC<ImageProps> = (props) => {
       height={height}
       priority={priority}
       className={className}
+      onClick={onClick}
       {...slots?.image}
     />
   )

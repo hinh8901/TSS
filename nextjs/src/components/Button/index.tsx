@@ -1,12 +1,13 @@
 "use client"
 
-import React, { HTMLProps } from "react"
+import React, { ButtonHTMLAttributes } from "react"
 
 import { RippleAnimation } from "../Animations"
 import CanView from "../CanView"
 
-interface ButtonProps extends HTMLProps<HTMLButtonElement> {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   type?: ButtonTypes
+  htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"]
   rippleAnimation?: false | {
     color?: string
     duration?: number
@@ -21,6 +22,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     className,
     type = "primary",
     rippleAnimation = {},
+    htmlType,
     ...restProps
   } = props
 
@@ -43,7 +45,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   }
 
   return (
-    <button className={`relative overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
+    <button type={htmlType} className={`relative overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
       <CanView condition={!!rippleAnimation}>
         <RippleAnimation
           color={(rippleAnimation as { color: string }).color}

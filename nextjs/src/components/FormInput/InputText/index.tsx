@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, ChangeEvent, FocusEvent, useEffect, useState } from "react"
+import React, { BaseSyntheticEvent, ChangeEvent, FocusEvent, InputHTMLAttributes, useState } from "react"
 import clsx from "clsx"
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
 import { BiSolidError } from "react-icons/bi"
@@ -6,7 +6,7 @@ import { BiSolidError } from "react-icons/bi"
 import CanView from "@/components/CanView"
 import Tooltip from "@/components/Tooltip"
 
-export interface InputTextProps extends React.HTMLProps<HTMLInputElement> {
+export interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   htmlInputType?: React.HTMLInputTypeAttribute
   error?: boolean
   helperText?: string
@@ -67,7 +67,7 @@ const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(function In
         delay={0}
         animationIn={0}
         animationOut={0}
-        tooltipClasses="bg-red3 font-semibold px-4 py-2 min-w-fit"
+        tooltipClasses="bg-red3 font-semibold px-4 py-2 min-w-min"
       >
         <input
           ref={ref}

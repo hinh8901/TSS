@@ -25,7 +25,12 @@
       "fieldMustSpecialChar": "{field} must contain at least {minSpecialChar, plural, =1{one special character} other {# special characters}}",
       "fieldMustLowerCase": "{field} must contain at least {minLower, plural, =1{one lower character} other {# lower characters}}",
       "fieldMustUpperCase": "{field} must contain at least {minUpper, plural, =1{one upper character} other {# upper characters}}",
-      "fieldMustNumber": "{field} must contain at least {minNumber, plural, =1{one number character} other {# number characters}}"
+      "fieldMustNumber": "{field} must contain at least {minNumber, plural, =1{one number character} other {# number characters}}",
+      "networkRequestFailed": "A network error occurred. Please check your connection and try again.",
+      "emailPassIncorrect": "Email or password is incorrect.",
+      "userDisabled": "This user account has been disabled.",
+      "tooManyRequests": "You have made too many requests in a short period of time. Please try again later.",
+      "errOccur": "An error occurred. Please try again later. (code: {errCode})"
     }
   },
   "fields": {
