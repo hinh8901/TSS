@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { GoogleAuthProvider, getAuth } from "firebase/auth"
+import { GoogleAuthProvider, getAuth, OAuthProvider, GithubAuthProvider } from "firebase/auth"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDvyznxH41s9Fc9Nzr4nt5LQR7kCcYF1g",
@@ -16,4 +16,15 @@ export const auth = getAuth()
 auth.useDeviceLanguage()
 
 export const googleProvider = new GoogleAuthProvider()
-googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+// googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+
+export const microsoftProvider = new OAuthProvider("microsoft.com")
+microsoftProvider.setCustomParameters({
+  prompt: "consent",
+  tenant: "common",
+})
+
+export const githubProvider = new GithubAuthProvider()
+githubProvider.setCustomParameters({
+  "allow_signup": "true"
+})

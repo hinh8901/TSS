@@ -12,7 +12,7 @@ import { schema } from "./schema"
 import CanView from "@/components/CanView"
 import ErrorMessage from "@/components/ErrorMessage"
 import Button from "@/components/Button"
-import { loginWithEmailAndPassword, loginWithGoogle } from "../../actions"
+import { loginWithEmailAndPassword, loginWithGithub, loginWithGoogle, loginWithMicrosoft } from "../../actions"
 
 type LoginWithEmailAndPasswordResponse = UserCredential | string | { message: string; errCode: string | number }
 
@@ -24,9 +24,8 @@ const FormToLogin: React.FC = () => {
 
   const OtherLoginMethod = [
     { name: "Google", description: t("loginGG"), iconURL: "/images/icons/google.svg", onLogin: loginWithGoogle },
-    { name: "Microsoft", description: t("loginMS"), iconURL: "/images/icons/microsoft.svg", onLogin: () => { } },
-    { name: "Twitter", description: t("loginTW"), iconURL: "/images/icons/twitter.svg", onLogin: () => { } },
-    { name: "Github", description: t("loginGit"), iconURL: "/images/icons/github.svg", onLogin: () => { } },
+    { name: "Microsoft", description: t("loginMS"), iconURL: "/images/icons/microsoft.svg", onLogin: loginWithMicrosoft },
+    { name: "Github", description: t("loginGit"), iconURL: "/images/icons/github.svg", onLogin: loginWithGithub },
     { name: "Phone number", description: t("loginPhone"), iconURL: "/images/icons/sms.svg", onLogin: () => { } },
   ]
 

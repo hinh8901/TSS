@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
 
-import { auth, googleProvider } from "@/services/firebase"
+import { auth, githubProvider, googleProvider, microsoftProvider } from "@/services/firebase"
 
 export const loginWithEmailAndPassword = async (
   email: string,
@@ -10,7 +10,6 @@ export const loginWithEmailAndPassword = async (
     const res = await signInWithEmailAndPassword(auth, email, password)
     return res
   } catch (error: any) {
-    console.log("ERROR", error)
     switch (error?.code) {
       case "auth/network-request-failed":
         return "networkRequestFailed"
@@ -37,9 +36,22 @@ export const loginWithEmailAndPassword = async (
 
 export const loginWithGoogle = async () => {
   try {
-    console.log("login to google")
     const res = await signInWithPopup(auth, googleProvider)
-  } catch (error: any) {
+  } catch (error: any) {}
+}
 
+export const loginWithMicrosoft = async () => {
+  try {
+    const res = await signInWithPopup(auth, microsoftProvider)
+  } catch (error: any) {
+    console.log(Object.keys(error), Object.values(error))
+  }
+}
+
+export const loginWithGithub = async () => {
+  try {
+    const res = signInWithPopup(auth, githubProvider)
+  } catch (error: any) {
+    console.log(Object.keys(error), Object.values(error))
   }
 }
