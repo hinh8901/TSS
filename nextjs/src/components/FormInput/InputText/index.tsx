@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, ChangeEvent, FocusEvent, InputHTMLAttributes, useState } from "react"
+import React, { BaseSyntheticEvent, ChangeEvent, FocusEvent, InputHTMLAttributes, useId, useState } from "react"
 import clsx from "clsx"
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
 import { BiSolidError } from "react-icons/bi"
@@ -11,6 +11,7 @@ export interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean
   helperText?: string
   disabled?: boolean
+  prefixIcon?: React.ReactNode
   onChangeFormInput?: (value: string) => void
   onBlurFormInput?: (event: BaseSyntheticEvent) => void
   onFocusFormInput?: () => void
@@ -29,12 +30,14 @@ const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(function In
     onBlurFormInput,
     onFocus,
     onFocusFormInput,
+    prefixIcon,
     ...restProps
   } = props
 
   const isHTMLInputTypePassword = htmlInputType === "password"
   const [isHideValue, setIsHideValue] = useState(isHTMLInputTypePassword)
   const [isFocus, setIsFocus] = useState(false)
+  const id = useId()
 
   const handleToggleHidePassword = () => {
     setIsHideValue(!isHideValue)
@@ -70,15 +73,16 @@ const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(function In
         tooltipClasses="bg-red3 font-semibold px-4 py-2 min-w-min"
       >
         <input
+          id={id}
           ref={ref}
           type={isHTMLInputTypePassword ? (isHideValue ? "password" : "text") : htmlInputType}
           className={clsx(
-            "py-2 px-2.5 rounded-md duration-200 w-full text-gray1 border",
-            "outline-0 bg-white",
+            "py-2 px-2.5 rounded-md duration-200 w-full text-gray1 border border-gray5 outline-0",
             "focus:shadow-[inset_0px_0px_0px_1px]",
             isHTMLInputTypePassword && "pr-[60px]",
-            !error ? "border-gray5 bg-white focus:shadow-blue7 focus:border-blue6 focus:bg-blue8"
-              : " border-red bg-red5 focus:shadow-red focus:border-red3",
+            !!prefixIcon && "pl-10",
+            !error ? "border-gray5 bg-gray11 focus:shadow-blue7 focus:border-blue6 focus:bg-blue8"
+              : "border-red7 bg-red6 focus:shadow-red focus:border-red3",
             className
           )}
           onChange={handleChange}
@@ -87,18 +91,29 @@ const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(function In
           {...restProps}
         />
       </Tooltip>
+      <CanView condition={!!prefixIcon}>
+        <label
+          htmlFor={id}
+          className={clsx(
+            "absolute h-full w-10 flex items-center justify-center top-0 left-0 cursor-pointer duration-200",
+            !error ? "text-gray3" : "text-red3",
+            isFocus && !error && "text-blue6"
+          )}
+        >{prefixIcon}</label>
+      </CanView>
       <CanView condition={isHTMLInputTypePassword}>
-        <div
+        <label
+          htmlFor={id}
           className={clsx(
             "absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer p-2 pr-0",
-            !error ? "text-gray2" : "text-red3"
+            !error ? "text-gray3" : "text-red3"
           )}
           onClick={handleToggleHidePassword}
         >
           <CanView condition={isHideValue} fallback={<IoEyeOutline />}>
             <IoEyeOffOutline />
           </CanView>
-        </div>
+        </label>
       </CanView>
       <CanView condition={!!error}>
         <div className={clsx(

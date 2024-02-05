@@ -3,18 +3,17 @@
     "slogan": "manage work effectively",
     "login": "login",
     "loginTitle": "Welcome back you've been missed!",
-    "newHere": "new here?",
-    "register": "register",
     "client": {
+      "newHere": "new here?",
+      "register": "register",
+      "registerTitle": "Register and Discover More!",
       "login": "login",
       "loginTitle": "Welcome back you've been missed!",
       "forgotPassword": "forgot password?",
       "orLogin": "or Login with",
       "loginGG": "Login with Google",
       "loginMS": "Login with Microsoft",
-      "loginTW": "Login with Twitter",
-      "loginGit": "Login with Github",
-      "loginPhone": "Login with Phone Number"
+      "loginGit": "Login with Github"
     }
   },
   "errorMessages": {
@@ -30,7 +29,11 @@
       "emailPassIncorrect": "Email or password is incorrect.",
       "userDisabled": "This user account has been disabled.",
       "tooManyRequests": "You have made too many requests in a short period of time. Please try again later.",
-      "errOccur": "An error occurred. Please try again later. (code: {errCode})"
+      "errOccur": "An error occurred. Please try again later. (code: {errCode})",
+      "rePassNotMatch": "Your confirmation password does not match",
+      "emailInUse": "The email address is already in use by another account.",
+      "invalidEmail": "The email address is badly formatted.",
+      "weakPass": "The password is too weak."
     }
   },
   "fields": {

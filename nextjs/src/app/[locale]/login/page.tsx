@@ -3,7 +3,7 @@ import { NextIntlClientProvider, useMessages, useTranslations } from "next-intl"
 
 import Image from "@/components/Image"
 import Background from "@/components/Background"
-import FormLogin from "./partials/FormLogin"
+import Entrances from "./partials/Entrances"
 
 const Login: React.FC = () => {
   const t = useTranslations('login')
@@ -24,11 +24,7 @@ const Login: React.FC = () => {
         </div>
         <div className="h-full w-full absolute left-0 top-0">
           <h1 className="capitalize text-4xl text-white font-semibold absolute top-[6%] left-[10%]">{t("slogan")}</h1>
-          <p className="absolute text-white capitalize bottom-[3%] left-[6%]">
-            {t("newHere")}
-            <span className="ml-1.5 font-semibold cursor-pointer hover:underline">{t("register")}</span>
-          </p>
-          <FormLogin />
+          <Entrances />
         </div>
       </section>
     </NextIntlClientProvider>

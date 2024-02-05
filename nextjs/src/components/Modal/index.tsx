@@ -7,7 +7,7 @@ import { CgClose } from "react-icons/cg"
 import CanView from "../CanView"
 
 interface ModalProps {
-  children?: React.ReactNode
+  children: React.ReactNode
   open?: boolean
   duration?: number
   onClose?: () => void
@@ -86,7 +86,7 @@ const Modal: React.FC<ModalProps> = (props) => {
               )}
             />
           </div>
-          <CanView condition={!!children} fallback={<div className="bg-white h-[280px] w-[280px] rounded-md" />}>
+          <CanView condition={!!children}>
             {children}
           </CanView>
         </div>
