@@ -7,11 +7,12 @@ import { MdOutlineAlternateEmail, MdOutlinePassword } from "react-icons/md"
 import { RiLockPasswordFill } from "react-icons/ri"
 
 import FormInput from "@/components/FormInput"
-import { schema } from "./schema"
 import CanView from "@/components/CanView"
 import ErrorMessage from "@/components/ErrorMessage"
 import Button from "@/components/Button"
+import GoogleReCAPTCHAPolicy from "@/components/GoogleReCAPTCHAPolicy"
 import { createUserWithEmailAndPassword } from "./actions"
+import { schema } from "./schema"
 
 type LoginWithEmailAndPasswordResponse = UserCredential | string | { message: string; errCode: string | number }
 
@@ -112,6 +113,7 @@ const FormRegister: React.FC = () => {
             className="capitalize py-2 mt-2.5"
             rippleAnimation={{ duration: 750 }}
           >{t("register")}</Button>
+          <GoogleReCAPTCHAPolicy />
         </FormProvider>
       </div>
     </>
