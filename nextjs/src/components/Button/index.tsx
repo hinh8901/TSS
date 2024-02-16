@@ -1,6 +1,7 @@
 "use client"
 
 import React, { ButtonHTMLAttributes } from "react"
+import { AiOutlineLoading } from "react-icons/ai"
 
 import { RippleAnimation } from "../Animations"
 import CanView from "../CanView"
@@ -8,6 +9,7 @@ import CanView from "../CanView"
 interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   type?: ButtonTypes
   htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"]
+  isLoading?: boolean
   rippleAnimation?: false | {
     color?: string
     duration?: number
@@ -23,6 +25,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     type = "primary",
     rippleAnimation = {},
     htmlType,
+    isLoading = false,
     ...restProps
   } = props
 
@@ -45,7 +48,12 @@ const Button: React.FC<ButtonProps> = (props) => {
   }
 
   return (
-    <button type={htmlType} className={`relative overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`} {...restProps}>
+    <button
+      type={htmlType}
+      className={`relative flex items-center justify-center gap-x-2 overflow-hidden border rounded-md py-2 px-8 duration-300 ${getTypeClass(type)} ${className}`}
+      disabled={isLoading}
+      {...restProps}
+    >
       <CanView condition={!!rippleAnimation}>
         <RippleAnimation
           color={(rippleAnimation as { color: string }).color}
@@ -53,6 +61,9 @@ const Button: React.FC<ButtonProps> = (props) => {
         />
       </CanView>
       {children}
+      <CanView condition={isLoading}>
+        <AiOutlineLoading className="animate-spin" />
+      </CanView>
     </button>
   )
 }

@@ -88,6 +88,7 @@ const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(function In
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          autoComplete="off"
           {...restProps}
         />
       </Tooltip>

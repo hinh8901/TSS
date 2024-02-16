@@ -1,10 +1,12 @@
-import { useState } from "react"
+import React from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { UserCredential } from "firebase/auth"
 import { useTranslations } from "next-intl"
 import { MdOutlineAlternateEmail } from "react-icons/md"
 import { RiLockPasswordFill } from "react-icons/ri"
+import { useMutation } from "@tanstack/react-query"
+import clsx from "clsx"
+import { UserCredential } from "firebase/auth"
 
 import FormInput from "@/components/FormInput"
 import Divider from "@/components/Divider"
@@ -16,15 +18,12 @@ import ErrorMessage from "@/components/ErrorMessage"
 import Button from "@/components/Button"
 import { loginWithEmailAndPassword, loginWithGithub, loginWithGoogle, loginWithMicrosoft } from "./actions"
 
-type LoginWithEmailAndPasswordResponse = UserCredential | string | { message: string; errCode: string | number }
-
 const FormLogin: React.FC = () => {
-  const [loginResponse, setLoginResponse] = useState<LoginWithEmailAndPasswordResponse>("")
   const t = useTranslations("login.client")
   const tErrMsg = useTranslations("errorMessages.client")
   const tField = useTranslations("fields.client")
 
-  const OtherLoginMethod = [
+  const OTHER_LOGIN_METHODS = [
     { name: "Google", description: t("loginGG"), iconURL: "/images/icons/google.svg", onLogin: loginWithGoogle },
     { name: "Microsoft", description: t("loginMS"), iconURL: "/images/icons/microsoft.svg", onLogin: loginWithMicrosoft },
     { name: "Github", description: t("loginGit"), iconURL: "/images/icons/github.svg", onLogin: loginWithGithub }
@@ -39,29 +38,67 @@ const FormLogin: React.FC = () => {
     formState: { errors }
   } = methods
 
-  const handleLoginWithEmailAndPassword = async ({ email, password }: { email: string, password: string }) => {
-    const res = await loginWithEmailAndPassword(email, password)
-    setLoginResponse(res)
-  }
+  const handleLoginWithEmailAndPassword = useMutation({
+    mutationFn: ({ email, password }: { email: string, password: string }) => {
+      handleLoginWithOtherMethod.reset()
+      return loginWithEmailAndPassword({ email, password })
+    }
+  })
+
+  const handleLoginWithOtherMethod = useMutation({
+    mutationFn: (loginMethod: () => Promise<UserCredential>) => {
+      handleLoginWithEmailAndPassword.reset()
+      return loginMethod()
+    }
+  })
+
+  const isLogging = handleLoginWithEmailAndPassword.status === "pending" || handleLoginWithOtherMethod.status === "pending"
 
   const getValidationErrMsg = (errorMessage?: string, dynamicValues: Record<string, any> = {}) => {
     return errorMessage && tErrMsg(errorMessage, dynamicValues)
   }
 
-  const getLoginErrMsg = () => {
-    if (!loginResponse) return ""
+  const renderLoginErrMsg = () => {
+    const errCode = (handleLoginWithEmailAndPassword.error as any)?.code ||
+      (handleLoginWithOtherMethod.error as any)?.code
 
-    switch (typeof loginResponse) {
-      case "string":
-        return tErrMsg(loginResponse)
+    let errMsg = ""
+    switch (errCode) {
+      case "auth/network-request-failed":
+        errMsg = "networkRequestFailed"
+        break
 
-      case "object":
-      default: {
-        if ("message" in loginResponse && loginResponse.message === "errOccur" && "errCode" in loginResponse)
-          return tErrMsg(loginResponse.message, { errCode: loginResponse.errCode })
-        return ""
-      }
+      case "auth/invalid-email":
+      case "auth/user-not-found":
+      case "auth/wrong-password":
+        errMsg = "emailPassIncorrect"
+        break
+
+      case "auth/too-many-requests":
+        errMsg = "tooManyRequests"
+        break
+
+      case "auth/popups-blocked":
+        errMsg = "popupsBlocked"
+        break
+
+      case "auth/popup-closed-by-user":
+        errMsg = "popupClosedByUser"
+        break
+
+      case "auth/cancelled-popup-request":
+        errMsg = "cancelledPopupRequest"
+        break
+
+      case "auth/user-cancelled":
+        errMsg = "userCancelled"
+        break
+
+      default:
+        return tErrMsg("errOccur", { errCode })
     }
+
+    return tErrMsg(errMsg)
   }
 
   return (
@@ -89,16 +126,19 @@ const FormLogin: React.FC = () => {
             errorMessage={getValidationErrMsg(errors.password?.message, { field: tField("pass"), min: 8, minSpecialChar: 1, minLower: 1, minUpper: 1, minNumber: 1 })}
             prefixIcon={<RiLockPasswordFill />}
           />
-          <CanView condition={!!loginResponse}>
-            <ErrorMessage>{getLoginErrMsg()}</ErrorMessage>
-          </CanView>
           <Button
-            onClick={handleSubmit(handleLoginWithEmailAndPassword)}
+            onClick={handleSubmit(({ email, password }) => handleLoginWithEmailAndPassword.mutate({ email, password }))}
             type="secondary"
             htmlType="submit"
             className="capitalize py-2 mt-2.5"
             rippleAnimation={{ duration: 750 }}
+            isLoading={isLogging}
           >{t("login")}</Button>
+          <CanView
+            condition={handleLoginWithEmailAndPassword.isError || handleLoginWithOtherMethod.isError}
+          >
+            <ErrorMessage>{renderLoginErrMsg()}</ErrorMessage>
+          </CanView>
         </FormProvider>
         <div className="flex items-center mt-2">
           <p className="text-gray9 text-center text-sm font-semibold capitalize cursor-pointer hover:underline">{t("forgotPassword")}</p>
@@ -112,15 +152,18 @@ const FormLogin: React.FC = () => {
         </div>
         <div className="flex justify-center items-center gap-x-5 mt-4">
           {
-            OtherLoginMethod.map(({ name, description, iconURL, onLogin }, index) => (
+            OTHER_LOGIN_METHODS.map(({ name, description, iconURL, onLogin }, index) => (
               <Tooltip key={index} title={name} delay={1000} >
                 <Image
-                  className="active:scale-[0.9] duration-200 cursor-pointer"
+                  className={clsx(
+                    "duration-200",
+                    isLogging ? "cursor-default grayscale-[0.6]" : "active:scale-[0.9] cursor-pointer"
+                  )}
                   src={iconURL}
                   alt={description}
                   width={28}
                   height={28}
-                  onClick={onLogin}
+                  onClick={() => !isLogging && handleLoginWithOtherMethod.mutate(onLogin)}
                 />
               </Tooltip>
             ))

@@ -33,7 +33,11 @@
       "rePassNotMatch": "Your confirmation password does not match",
       "emailInUse": "The email address is already in use by another account.",
       "invalidEmail": "The email address is badly formatted.",
-      "weakPass": "The password is too weak."
+      "weakPass": "The password is too weak.",
+      "popupBlocked": "We couldn't sign you in because the sign-in popup was blocked by your browser. Please disable any popup blockers and try again.",
+      "popupClosedByUser": "Sign-in process was cancelled because the popup was closed before it could complete. Please try signing in again.",
+      "cancelledPopupRequest": "A new sign-in process cannot be initiated because a previous one is still running. Please wait a moment and try again.",
+      "userCancelled": "You cancelled the sign-in process."
     }
   },
   "fields": {
